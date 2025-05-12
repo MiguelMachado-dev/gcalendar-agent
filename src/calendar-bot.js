@@ -232,6 +232,9 @@ async function checkCalendar() {
       orderBy: "startTime",
     });
 
+    console.log("Timezone:", TIMEZONE);
+    console.log("Current time in Sao Paulo:", nowInSaoPaulo);
+
     const events = response.data.items;
 
     // Create message
