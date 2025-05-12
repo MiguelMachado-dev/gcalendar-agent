@@ -1,0 +1,19 @@
+version: "3"
+services:
+  calendar-bot:
+    build: .
+    container_name: calendar-bot
+    restart: unless-stopped
+    volumes:
+      - ./src:/app/src
+      - ./.env:/app/.env
+      # Anonymous volume to prevent host node_modules from mounting
+      - /app/node_modules
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - GOOGLE_REFRESH_TOKEN=${GOOGLE_REFRESH_TOKEN}
+    command: sh -c "node src/calendar-bot.js && node -e \"const cron = require('node-cron'); cron.schedule('0 9 * * *', () => { console.log('Running daily calendar check...'); require('./src/calendar-bot.js'); });\""
