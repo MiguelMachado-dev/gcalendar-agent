@@ -11,6 +11,7 @@ const {
 } = require("date-fns");
 const { zonedTimeToUtc, utcToZonedTime } = require("date-fns-tz");
 const TelegramBot = require("node-telegram-bot-api");
+const cron = require("node-cron");
 require("dotenv").config();
 
 // Timezone configuration
@@ -295,5 +296,17 @@ async function sendTelegramMessage(message) {
 
 // Run the script
 checkCalendar();
+
+// Schedule daily check at 8 AM America/Sao_Paulo time
+cron.schedule(
+  "0 8 * * *",
+  () => {
+    console.log("Running daily calendar check...");
+    checkCalendar();
+  },
+  {
+    timezone: "America/Sao_Paulo",
+  }
+);
 
 console.log("Bot started. Listening for commands...");
