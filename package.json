@@ -5,7 +5,12 @@
   "main": "src/calendar-bot.js",
   "scripts": {
     "start": "node src/calendar-bot.js",
-    "token": "node src/get-refresh-token.js"
+    "token": "node src/get-refresh-token.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "docker:logs": "docker-compose logs -f",
+    "docker:restart": "docker-compose restart"
   },
   "dependencies": {
     "axios": "^1.6.2",
